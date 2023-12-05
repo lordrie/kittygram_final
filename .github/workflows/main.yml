@@ -139,13 +139,13 @@ jobs:
         target: "kittygram"
     - name: Executing remote ssh commands to deploy
       uses: appleboy/ssh-action@master
+      env:
+          SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_PASSPHRASE }}
-        env:
-          SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
         script: |
           cd kittygram
           sudo docker compose -f docker-compose.production.yml pull
