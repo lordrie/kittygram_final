@@ -144,6 +144,8 @@ jobs:
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_PASSPHRASE }}
+        env:
+          SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
         script: |
           cd kittygram
           sudo docker compose -f docker-compose.production.yml pull
