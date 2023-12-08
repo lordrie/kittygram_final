@@ -13,6 +13,7 @@ jobs:
           POSTGRES_USER: lord
           POSTGRES_PASSWORD: lord1234
           POSTGRES_DB: kittygram_db
+          SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
@@ -35,6 +36,7 @@ jobs:
         POSTGRES_DB: kittygram_db
         DB_HOST: 127.0.0.1
         DB_PORT: 5432
+        SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
       run: |
         python -m flake8 backend/
         pytest
@@ -137,6 +139,8 @@ jobs:
         target: "kittygram"
     - name: Executing remote ssh commands to deploy
       uses: appleboy/ssh-action@master
+      env:
+          SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
